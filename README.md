@@ -1,0 +1,2 @@
+# POLYOMES
+Polynome object (class) 
