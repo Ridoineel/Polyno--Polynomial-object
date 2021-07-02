@@ -1,7 +1,7 @@
 # POLYNOMIALS
 Polynomial object (class) 
 
-  The main object that manages the polynomials is in the polynomal module (polynomial.py)
+  The main object that manages the polynomials is in the polynomails module (polynomials.py)
   
   EXEMPLE:
   
