@@ -269,11 +269,11 @@ def main():
 	p = Poly({3:2, 2:0, 1:-2, 0:1})
 
 	print(f"P(x) = {p}")
-	print(f"P(0) = {p.eval('f')}; P(1) = {p.eval(1)}; P(-4) = {p.eval(-4)}")
+	print(f"P(0) = {p.eval(0)}; P(1) = {p.eval(1)}; P(-4) = {p.eval(-4)}")
 	print(f"P'(x) = {p.derive()}")
 	print(f"Primitive of P(x) is {p.primitive()}")
 	print(f"value of integraf's P(x) from -1 to 1 is {p.integral(-1, 1)}")
-	print(f'In [-5, 5], P(x) = 0 => x in {p.zeros(-5,5, "f")}')
+	print(f'In [-5, 5], P(x) = 0 => x in {p.zeros(-5, 5, 0.0001)}')
 	
 	# import pdb; pdb.set_trace()
 
