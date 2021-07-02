@@ -3,11 +3,11 @@
 
 """ 
 	Author: RidoineEl
-	Object: Polynome obejct (class)
+	Object: Polynomial obejct (class)
 """
 
 class Poly():
-	""" Polynome: dn*X^n + d_n'*X^n' + ..... d_0
+	""" Polynomial: dn*X^n + d_n'*X^n' + ..... d_0
 
 	@param: dictionary object in format degree:coefficient,
 
@@ -21,10 +21,10 @@ class Poly():
 		__sub__: "-" operand between Poly and Poly or number (int or float)
 		__mul__: "*" operand between Poly and number (int or float)
 		__truediv__: "/" operand between Poly and number (int or float), just Poly / number
-		eval: Value returned polynome with unknow value x
-		derive: polynome derive
-		primitive: polynome primitive
-		integral: polynome integrav from a to b
+		eval: Value returned polynomial with unknow value x
+		derive: polynomial derive
+		primitive: polynomial primitive
+		integral: polynomial integrav from a to b
 		zeros: interval of P(X) = 0 solution by precision value
 
 	
@@ -64,7 +64,7 @@ class Poly():
 				self.coef.append(int(coef) if float(coef).is_integer() else coef)
 
 	def __repr__(self):
-		""" Return polynome render with print() and type in terminal
+		""" Return polynomial render with print() and type in terminal
 			exemple: >> p = Poly({2:1, 1:4, 0:8})
 					 >> p
 					 x^2 + 4x + 8
@@ -106,7 +106,7 @@ class Poly():
 		return answer
 
 	def __iter__(self):
-		"""return (degree, coef) of polynome by itération time.
+		"""return (degree, coef) of polynomial by itération time.
 
 		ex: >> p = Poly({2:1, 1:2})
 			>> for items in p:
@@ -203,7 +203,7 @@ class Poly():
 		return new_poly
 
 	def primitive(self):
-		""" return polynome's primitiv """
+		""" return polynomial's primitiv """
 
 		# primitive coefficients list
 		new_c = [self.coef[i]/(self.deg[i] + 1) for i in range(0, len(self.coef) ) ]
@@ -214,7 +214,7 @@ class Poly():
 		return new_poly
 
 	def integral(self, a, b): 
-		""" Retun value of polynome's integral from a to b """
+		""" Retun value of polynomial's integral from a to b """
 
 		try:
 			a = float(a)
@@ -230,7 +230,7 @@ class Poly():
 			return int(integ) if float(integ).is_integer() else integ
 	
 	def zeros(self, a, b, precision):
-		"""zeros(a, b, prec) -> [i1, i2] # shortest interval of zero of polynome,
+		"""zeros(a, b, prec) -> [i1, i2] # shortest interval of zero of polynomial,
 			Shortest interval of P(x) = 0 solution by precision 
 
 			By dichotomie

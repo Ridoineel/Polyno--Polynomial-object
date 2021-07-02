@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 # coding: utf-8;
 
-from polynome import Poly
+from polynomial import Poly
 
 def eval(p):
     print('Value of P(x)')
