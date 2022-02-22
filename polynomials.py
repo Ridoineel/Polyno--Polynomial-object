@@ -313,7 +313,9 @@ class Poly():
 			new_deg_coef = dict()
 
 			for i in range(self_n + p_n + 1):
+				# calcullation of coeffcient p_i
 				p_i = 0
+
 				for j in range(i + 1):
 					if j in p.degs and i - j in self.degs:
 						p_i += p_deg_coef[j] * self_deg_coef[i - j]
