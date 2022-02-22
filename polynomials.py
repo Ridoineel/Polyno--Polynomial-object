@@ -11,204 +11,103 @@ class Poly():
 
 	@param: dictionary object in format degree:coefficient,
 
-	@attribs
-		-coef : coefficients list
-		-deg : degrees list
+	@attributes
+		-degs : list of degrees sorted in descending order
+		-coefs : list of coefficients according to degs
+		
 	
 	@method:
-		__repr__: for print preview
-		__add__: "+" operand between Poly and Poly or number (int or float)
-		__sub__: "-" operand between Poly and Poly or number (int or float)
-		__mul__: "*" operand between Poly and number (int or float)
-		__truediv__: "/" operand between Poly and number (int or float), just Poly / number
-		eval: Value returned polynomial with unknow value x
-		derive: polynomial derive
-		primitive: polynomial primitive
-		integral: polynomial integrav from a to b
-		zeros: interval of P(X) = 0 solution by precision value
-
+		toString:
+		degree:
+		eval:
+		derivative:
+		primitive:
+		integral:
+		zero:
+		lim:
+		__repr__
+		__add__
+		__sub__
+		__mul__
+		__truediv__
 	
 	EXAMPLE:
-			>> datas = {2:4, 1:2}
-			>> p = Poly(datas)
-			>> print(p)
-			4*x^2 + 2*x
-			>> p / 2
-			2*x^2 + x
-			>> p.eval(-1/2)
-			0
-			>> p.derive()
-			8*x + 2
-			>> p2 == Poly({3:2, 2:4, 0:4})
-			>> print(p2)
-			2*x^3 + 4*x^2 + 4
-			>> p + p2
-			2*x^3 + 8*x^2 + 2*x + 4
-			>> ##############################
-		
-				
-				AUTHOR: RidoineEl
+		>> datas = {2:4, 1:2}
+		>> p = Poly(datas)
+		>> print(p)
+		4*x^2 + 2*x
+		>> p / 2
+		2*x^2 + x
+		>> p.eval(-1/2)
+		0
+		>> p.derivative()
+		8*x + 2
+		>> p2 == Poly({3:2, 2:4, 0:4})
+		>> print(p2)
+		2*x^3 + 4*x^2 + 4
+		>> p + p2
+		2*x^3 + 8*x^2 + 2*x + 4
+		>> ##############################
 
 	"""
 
 	def __init__(self, datas: dict):
 		datas = sorted(datas.items(), reverse=True)
 
-		self.deg = list()
-		self.coef = list()
+		self.degs = list()
+		self.coefs = list()
 
 		# deg:coef if coef not null
 		for deg, coef in datas:
 			if coef != 0:
-				self.deg.append(int(deg) if float(deg).is_integer() else deg)
-				self.coef.append(int(coef) if float(coef).is_integer() else coef)
+				self.degs.append(int(deg) if float(deg).is_integer() else deg)
+				self.coefs.append(int(coef) if float(coef).is_integer() else coef)
 
-	def __repr__(self):
-		""" Return polynomial render with print() and type in terminal
-			exemple: >> p = Poly({2:1, 1:4, 0:8})
-					 >> p
-					 x^2 + 4x + 8
-					 >> print(p)
-					 x^2 + 4x + 8
+	def toString(self):
+		return self.__repr__()
 
-		"""
+	def degree(self):
+		return self.degs[0]
 
-		answer = str()
-		for i in range(len(self.coef)): 
-			if i != 0: answer += " "
-
-			coef = self.coef[i]
-			degree = self.deg[i]
-
-			# Coefficient level
-			if coef in [-1, 1]: 
-				if coef == -1:
-					answer += '- ' if i else '-'
-				else:
-					answer += '+ ' if i  else ""
-
-				answer += '1' if not degree else ''
-			else:
-				if not i:  
-					answer += str(coef)
-				else:
-					answer += "- " if coef < 0 else f"+ "
-					answer += str(abs(coef))
-
-			# Degree level
-			if not degree:
-				pass
-			elif degree == 1 :
-				answer += 'x'
-			else:
-				answer += 'x^' + str(degree)
-
-		return answer
-
-	def __iter__(self):
-		"""return (degree, coef) of polynomial by itération time.
-
-		ex: >> p = Poly({2:1, 1:2})
-			>> for items in p:
-				  print(items)
-			...# render
-			(2, 1)
-			(1, 2)
-		
-		"""
-
-		for i in range(len(self.coef)):
-			yield self.deg[i], self.coef[i]
-	
-	def __add__(self, val):
-
-		if type(val) is Poly:
-			all_deg_coef = list(self) + list(val)
-			deg_coef = dict()
-
-			for deg, coef in all_deg_coef:
-				
-				if deg not in deg_coef.keys():
-					deg_coef[deg] = coef
-				else:
-					deg_coef[deg] += coef
-
-		elif type(val) in [float, int]:
-
-			deg_coef = dict(zip(self.deg, self.coef))
-
-			if 0 not in deg_coef.keys():
-				deg_coef[0] = val
-			else:
-				deg_coef[0] += val
-		else:
-			raise TypeError('Unsupported opération: Poly and non-Poly, non-int or non-float.')
-		
-		return Poly(deg_coef)
-
-	def __sub__(self, poly):
-		
-		return self + (-1 * poly)
-	
-	def __mul__(self, number):
-		""" Return value of multiplication:
-			"*" operand for Poly with number type once (Poly * number, not number * Poly) 
-		
-		"""
-
-		if type(number) in [int, float]:
-			deg_coef = dict(zip(self.deg, map(lambda x: number * x, self.coef)))
-
-			return Poly(deg_coef)
-		else:
-			raise TypeError('Unsupported opération: non-int or non-float and Poly')
-	
-	def __rmul__(self, poly):
-		""" Value of Mutiplication for number * Poly """
-
-		return self.__mul__(poly)
-
-	def __truediv__(self, number):
-		""" "/" operand for Poly with number (Poly / number , not number / Poly)  """
-
-		if type(number) in [int, float]:
-			return (1/number) * self
-		else:
-			raise TypeError('Unsupported opération: non-int or non-float and Poly')
-
-	def eval(self, real):
+	def eval(self, value):
 		""" Return value of P(real) """
 
-		if type(real) in [int, float]:
+		if isinstance(value, float) or isinstance(value, int):
 			result = 0
-			for i in range(len(self.coef)):
-				coef = self.coef[i]
-				degree = self.deg[i]
 
-				result += coef * (real**degree)
+			for i in range(len(self.coefs)):
+				coef = self.coefs[i]
+				degree = self.degs[i]
+
+				result += coef * (value**degree)
 
 			return int(result) if float(result).is_integer() else result
 		else:
-			raise ValueError('Invalid unknow value')
+			raise ValueError(f"Unsupported operation of {type(value)} and Poly")
 
-	def derive(self):
-		""" return polynôme's derive """
+	def derivative(self):
+		""" return derivative of this polynomial 
 
-		# derive coefficients list
-		new_c = [self.coef[i]*self.deg[i] for i in range(len(self.coef)) ]
-		# derive degrees list
-		new_d = [degree - 1 for degree in self.deg]
+		"""
+
+		# deriavative coefficients list
+		new_c = [self.coefs[i]*self.degs[i] for i in range(len(self.coefs)) ]
+		# derivative degrees list
+		new_d = [degree - 1 for degree in self.degs]
 		
 		new_poly = Poly(dict(zip(new_d, new_c)))
+
 		return new_poly
 
 	def primitive(self):
-		""" return polynomial's primitiv """
+		""" return primitive of this polynomial 
+
+		"""
 
 		# primitive coefficients list
-		new_c = [self.coef[i]/(self.deg[i] + 1) for i in range(0, len(self.coef) ) ]
+		new_c = [self.coefs[i]/(self.degs[i] + 1) for i in range(0, len(self.coefs) ) ]
 		# primitive degrees list
-		new_d = [degree + 1 for degree in self.deg]
+		new_d = [degree + 1 for degree in self.degs]
 
 		new_poly = Poly(dict(zip(new_d, new_c)))
 		return new_poly
@@ -228,12 +127,9 @@ class Poly():
 			integ = primit.eval(b) - primit.eval(a)
 
 			return int(integ) if float(integ).is_integer() else integ
-	
-	def zeros(self, a, b, precision):
-		"""zeros(a, b, prec) -> [i1, i2] # shortest interval of zero of polynomial,
-			Shortest interval of P(x) = 0 solution by precision 
 
-			By dichotomie
+	def zero(self, a, b, precision=10e-7):
+		""" Search solution of P(x) = 0 where x in [a, b] 
 
 		"""
 
@@ -250,32 +146,217 @@ class Poly():
 			if a > b:
 				a, b = b, a
 
-			if p(a) * p(b) <= 0:
-				while abs(a - b) > precision:
-					mil = (a+b)/2
-					if p(a) * p(mil) <= 0: 
-						b = mil
-					else: 
-						a = mil
+			if p(a) * p(b) > 0:
+				return None
 
-				return [a, b]
-	
-	def lim(self, a="inf"):
+			while abs(a - b) > precision:
+				if p(a) == 0: return a
+				if p(b) == 0: return b
+
+				mil = (a+b)/2
+
+				if p(a) * p(mil) <= 0: 
+					b = mil
+				else: 
+					a = mil
+
+			return a
+
+	def lim(self, x="inf"):
 		pass
+
+	########### SPECIAL METHODS ###########
+	###########					###########
+	def __repr__(self):
+		""" Return polynomial string format
+			example: >> p = Poly({2:1, 1:4, 0:8})
+					 >> p
+					 x^2 + 4x + 8
+					 >> print(p)
+					 x^2 + 4x + 8
+
+		"""
+
+		if not self.degs and not self.coefs:
+			return "0"
+
+		result = str()
+
+		for i in range(len(self.coefs)): 
+			if i != 0: result += " "
+
+			coef = self.coefs[i]
+			degree = self.degs[i]
+
+			# Coefficient level
+			if coef in [-1, 1]: 
+				if coef == -1:
+					result += '- ' if i else '-'
+				else:
+					result += '+ ' if i  else ""
+
+				result += '1' if not degree else ''
+			else:
+				if not i:  
+					result += str(coef)
+				else:
+					result += "- " if coef < 0 else "+ "
+					result += str(abs(coef))
+
+			# Degree level
+			if not degree:
+				pass
+			elif degree == 1 :
+				result += 'x'
+			else:
+				result += 'x^' + str(degree)
+
+		return result
+
+	def __iter__(self):
+		"""return (degree, coef) of polynomial per iteration.
+
+		ex: >> p = Poly({2:1, 1:2})
+			>> for items in p:
+				  print(items)
+			...
+			(2, 1)
+			(1, 2)
+		
+		"""
+
+		for i in range(len(self.coefs)):
+			yield self.degs[i], self.coefs[i]
+
+	#+ ######### OPERATORS MANAGEMENT ###########
+	############					  ###########
+	def __add__(self, val):
+		""" Add object to ...
+			in the case of self + val
+
+		"""
+
+		if isinstance(val, Poly):
+			# Add the coefficients according to the degrees
+
+			all_deg_coef = list(self) + list(val)
+			deg_coef = dict()
+
+			for deg, coef in all_deg_coef:
+				if deg not in deg_coef.keys():
+					deg_coef[deg] = coef
+				else:
+					deg_coef[deg] += coef
+		elif isinstance(val, int) or isinstance(val, float):
+			# add val to coefficient whose degree is null
+
+			deg_coef = dict(zip(self.degs, self.coefs))
+
+			if 0 not in deg_coef.keys():
+				# if 0 degree not exist
+				deg_coef[0] = val
+			else:
+				# if 0 degree exist
+				deg_coef[0] += val
+		else:
+			raise TypeError('Unsupported opération: Poly and non-Poly, non-int or non-float.')
+		
+		return Poly(deg_coef)
+
+	def __radd__(self, val):
+		""" addition in the case of val + self 
+
+		"""
+
+		return self + val
+
+
+
+	def __neg__(self):
+		""" unary '-' operator 
+
+		"""
+
+		return -1 * self
+
+	def __sub__(self, val):
+		""" Substraction of this and val, 
+			in the case of self - val 
+
+		"""
+
+		return self + (-val)
+
+	def __rsub__(self, val):
+		""" substraction in the case of val - self 
+
+		"""
+
+		return self - val
+	
+	def __mul__(self, val):
+		""" '*' operator in the case of self * val
+		
+		"""
+
+		if isinstance(val, Poly):
+			p = val
+
+			# dict object whose keys is degs and values is coefs
+			self_deg_coef = dict(zip(self.degs, self.coefs))
+			p_deg_coef = dict(zip(p.degs, p.coefs))
+
+			# degree (max of degrees) of self and val
+			self_n = self.degree()
+			p_n = p.degree()
+
+			new_deg_coef = dict()
+
+			for i in range(self_n + p_n + 1):
+				p_i = 0
+				for j in range(i + 1):
+					if j in p.degs and i - j in self.degs:
+						p_i += p_deg_coef[j] * self_deg_coef[i - j]
+
+				new_deg_coef[i] = p_i
+
+			return Poly(new_deg_coef)
+
+		elif isinstance(val, int) or isinstance(val, float):
+			nb = val
+
+			new_coefs = [nb * x for x in self.coefs]
+			deg_coef = dict(zip(self.degs, new_coefs))
+
+			return Poly(deg_coef)
+		else:
+			raise TypeError(f'Unsupported opération: {type(val).__qualname__} and Poly')
+	
+	def __rmul__(self, val):
+		""" '*' operator in the case of val * self
+
+		"""
+
+		return self * val
+
+	def __truediv__(self, nb):
+		""" "/" operand for Poly with number (Poly / nb , not nb / Poly)  """
+
+		if isinstance(nb, float) or isinstance(nb, int):
+			return (1/nb) * self
+		else:
+			raise TypeError(f"Unsupported '/' operation of {type(nb).__qualname__} and Poly")
+
+	#######################################
+	#######################################
+
+
+	
 
 def main():
 	# TEST
-	print("\tTEST")
-	p = Poly({3:2, 2:0, 1:-2, 0:1})
 
-	print(f"P(x) = {p}")
-	print(f"P(0) = {p.eval(0)}; P(1) = {p.eval(1)}; P(-4) = {p.eval(-4)}")
-	print(f"P'(x) = {p.derive()}")
-	print(f"Primitive of P(x) is {p.primitive()}")
-	print(f"value of integraf's P(x) from -1 to 1 is {p.integral(-1, 1)}")
-	print(f'In [-5, 5], P(x) = 0 => x in {p.zeros(-5, 5, 0.0001)}')
-	
-	# import pdb; pdb.set_trace()
+	p = Poly({3:2, 2:0, 1:-2, 0:1})
 
 if __name__ == "__main__":
 	main()
