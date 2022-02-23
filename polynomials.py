@@ -60,7 +60,10 @@ class Poly():
 		# deg:coef if coef not null
 		for deg, coef in datas:
 			if coef != 0:
-				self.degs.append(float(deg))
+				if not float(deg).is_integer():
+					raise ValueError("Error: degrees could be integers")
+
+				self.degs.append(int(deg))
 				self.coefs.append(float(coef))
 
 	def toString(self):
@@ -188,9 +191,9 @@ class Poly():
 			coef = self.coefs[i]
 			degree = self.degs[i]
 
+			coef = round(coef, 3)
 			if float(coef).is_integer(): coef = int(coef)
-			if float(degree).is_integer(): degree = int(degree)
-
+			
 			# Coefficient level
 			if coef in [-1, 1]: 
 				if coef == -1:
@@ -362,6 +365,7 @@ def main():
 	# TEST
 
 	p = Poly({3:2, 2:0, 1:-2, 0:1})
+	print(p)
 
 if __name__ == "__main__":
 	main()
