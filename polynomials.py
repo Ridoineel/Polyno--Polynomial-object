@@ -51,7 +51,7 @@ class Poly():
 
 	"""
 
-	def __init__(self, datas: dict):
+	def __init__(self, datas: dict = {}):
 		datas = sorted(datas.items(), reverse=True)
 
 		self.degs = list()
@@ -60,8 +60,8 @@ class Poly():
 		# deg:coef if coef not null
 		for deg, coef in datas:
 			if coef != 0:
-				self.degs.append(int(deg) if float(deg).is_integer() else deg)
-				self.coefs.append(int(coef) if float(coef).is_integer() else coef)
+				self.degs.append(float(deg))
+				self.coefs.append(float(coef))
 
 	def toString(self):
 		return self.__repr__()
@@ -187,6 +187,9 @@ class Poly():
 
 			coef = self.coefs[i]
 			degree = self.degs[i]
+
+			if float(coef).is_integer(): coef = int(coef)
+			if float(degree).is_integer(): degree = int(degree)
 
 			# Coefficient level
 			if coef in [-1, 1]: 
