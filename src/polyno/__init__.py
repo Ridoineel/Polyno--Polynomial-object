@@ -357,8 +357,8 @@ class Poly():
 			p = val
 
 			# dict object whose keys is degs and values is coefs
-			self_deg_coef = dict(zip(self.degs, self.coefs))
-			p_deg_coef = dict(zip(p.degs, p.coefs))
+			self_deg_coef = self.degs_coefs
+			p_deg_coef = p.degs_coefs
 
 			# degree (max of degrees) of self and val
 			self_n = self.degree()
@@ -367,7 +367,7 @@ class Poly():
 			new_deg_coef = dict()
 
 			for i in range(self_n + p_n + 1):
-				# calcullation of coeffcient p_i
+				# calculation of coefficient p_i
 				p_i = 0
 
 				for j in range(i + 1):
