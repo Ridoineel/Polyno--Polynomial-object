@@ -1,4 +1,4 @@
-# POLYNOMIALS
+# Polyno
 Polynomial object (class) 
 
 ## Installation
