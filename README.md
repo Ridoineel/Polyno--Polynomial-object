@@ -12,20 +12,19 @@ from polyno import Poly
 ```
 
 ### Set P1 and P2 for the examples below
-> parameter is dictionary object with key=degree and value=coef
-> degree:coef
+	parameter is dictionary object with key=degree and value=coef
+	degree:coef
 
 ```python
 >>> P1 = Poly({1:1, 2:3})
 >>> P2 = Poly({0:5, 3:2})
 ```
 
-> By default, Poly.coefs is list of polynomial degrees according to reversed sorted Poly.degs
-> exemple: P2.coefs = [2, 5], not [2, 0, 0, 5]
-> below, get absolute list in ascending order of coefficients
+	By default, Poly.coefs is list of polynomial degrees according to reversed sorted Poly.degs <br/>
+	exemple: P2.coefs = [2, 5], not [2, 0, 0, 5] <br/>
+	below, get absolute list in ascending order of coefficients
 
 ```python
->>> P2.coefficients()
 >>> P2.coefficients()
 [5.0, 0, 0, 2.0]
 >>> 
