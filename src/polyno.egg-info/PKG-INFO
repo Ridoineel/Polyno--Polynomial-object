@@ -1,3 +1,20 @@
+Metadata-Version: 2.1
+Name: polyno
+Version: 1.0.2
+Summary: Polyno: polynomial object
+Home-page: https://github.com/Ridoineel/Polyno
+Author: RidoineEl
+Author-email: ridoineelofficiel@gmail.com
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/Ridoineel/Polyno/issues
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
 # Polyno
 Polynomial object (class) 
 
@@ -12,23 +29,9 @@ from polyno import Poly
 ```
 
 ### Set P1 and P2 for the examples below
-> parameter is dictionary object with key=degree and value=coef
-> degree:coef
-
 ```python
 >>> P1 = Poly({1:1, 2:3})
 >>> P2 = Poly({0:5, 3:2})
-```
-
-> By default, Poly.coefs is list of polynomial degrees according to reversed sorted Poly.degs
-> exemple: P2.coefs = [2, 5], not [2, 0, 0, 5]
-> below, get absolute list in ascending order of coefficients
-
-```python
->>> P2.coefficients()
->>> P2.coefficients()
-[5.0, 0, 0, 2.0]
->>> 
 ```
 
 ## Print polynomial
@@ -109,3 +112,4 @@ x^3 + 2.5
 > eval: value of P(x) <br/>
 > integral: polynomial integral from a to b <br/>
 > zero: solution of P(x) = 0 for x in [a, b] interval <br/>
+
