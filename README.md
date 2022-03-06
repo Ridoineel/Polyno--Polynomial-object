@@ -20,9 +20,10 @@ from polyno import Poly
 >>> P2 = Poly({0:5, 3:2})
 ```
 
-	By default, Poly.coefs is list of polynomial degrees according to reversed sorted Poly.degs <br/>
-	exemple: P2.coefs = [2, 5], not [2, 0, 0, 5] <br/>
-	below, get absolute list in ascending order of coefficients
+	By default, Poly.coefs is list of polynomial degrees according to reversed sorted Poly.degs.
+	Exemple: P2.coefs = [2, 5], not [2, 0, 0, 5]
+
+	Below, get absolute list in ascending order of coefficients
 
 ```python
 >>> P2.coefficients()
@@ -108,3 +109,8 @@ x^3 + 2.5
 > eval: value of P(x) <br/>
 > integral: polynomial integral from a to b <br/>
 > zero: solution of P(x) = 0 for x in [a, b] interval <br/>
+
+# Futures
+>
+>
+>
