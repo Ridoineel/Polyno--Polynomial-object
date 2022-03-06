@@ -1,30 +1,94 @@
 # POLYNOMIALS
 Polynomial object (class) 
 
-  The main object that manages the polynomials is in the polynomails module (polynomials.py)
-  
-  EXEMPLE:
-  
-    # TEST
-    print("\tTEST")
-    p = Poly({3:2, 2:0, 1:-2, 0:1})
+## Installing
+```bash
+pip install polyno
+```
 
-    print(f"P(x) = {p}")
-    print(f"P(0) = {p.eval(0)}; P(1) = {p.eval(1)}; P(-4) = {p.eval(-4)}")
-    print(f"P'(x) = {p.derive()}")
-    print(f"Primitive of P(x) is {p.primitive()}")
-    print(f"value of integraf's P(x) from -1 to 1 is {p.integral(-1, 1)}")
-    print(f'In [-5, 5], P(x) = 0 => x in {p.zeros(-5, 5, 0.0001)}')
-    
-    
-    # Output
-          TEST
-    P(x) = 2x^3 - 2x + 1
-    P(0) = 1; P(1) = 1; P(-4) = -119
-    P'(x) = 6x^2 - 2
-    Primitive of P(x) is 0.5x^4 - x^2 + x
-    value of integraf's P(x) from -1 to 1 is 2
-    In [-5, 5], P(x) = 0 => x in [-1.191558837890625, -1.1914825439453125]
+## Import Poly object
+```python
+from polyno import Poly
+```
 
-  
-  Read main.py file and execute it for a good understanding of the object 
+### Set P1 and P2 for the examples below
+```python
+>>> P1 = Poly({1:1, 2:3})
+>>> P2 = Poly({0:5, 3:2})
+```
+
+## Print polynomial
+```python
+>>> P1.toString()
+'3x^2 + x'
+>>> print(P1)
+3x^2 + x
+>>> print(P2)
+2x^3 + 5
+>>> 
+```
+
+## Addition (with Poly and scalar)
+```python
+>>> P1 + P2
+2x^3 + 3x^2 + x + 5
+>>>
+>>> P1 + 2
+3x^2 + x + 2
+>>>
+```
+
+## Substraction (with Poly and scalar)
+```python
+>>> P1 - P2
+-2x^3 + 3x^2 + x - 5
+>>> P2 - P1
+2x^3 - 3x^2 - x + 5
+>>> P1 - 2
+3x^2 + x - 2
+>>>
+```
+
+## Multiplication with scalar
+```python
+>>> P1 * -2
+-6x^2 - 2x
+>>> P2 * 3
+6x^3 + 15
+>>> 
+```
+
+## Multiplication with Poly
+```python
+>>> P1 * P2
+6x^5 + 2x^4 + 15x^2 + 5x
+>>> 
+```
+
+## Division with scalar
+```python
+>>> P2/2
+x^3 + 2.5
+>>> 
+```
+
+## Derivative
+```python
+>>> P1.derivative()
+6x + 1
+>>> 
+```
+
+## k_th order Derivative 
+```python
+>>> P2 = Poly({0:5, 3:2})
+>>> print(P2.derivative(2))
+12x
+>>> print(P2.derivative(3))
+12
+```
+
+## Other method
+>> eval: value of P(x)
+>> integral: polynomial integral from a to b
+>> zero: solution of P(x) = 0 for x in [a, b] interval

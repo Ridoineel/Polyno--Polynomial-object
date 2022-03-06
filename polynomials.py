@@ -3,7 +3,7 @@
 
 """ 
 	Author: RidoineEl
-	Object: Polynomial obejct (class)
+	Object: Polynomial object (class)
 """
 
 class Poly():
@@ -14,7 +14,6 @@ class Poly():
 	@attributes
 		-degs : list of degrees sorted in descending order
 		-coefs : list of coefficients according to degs
-		
 	
 	@method:
 		toString:
@@ -54,17 +53,23 @@ class Poly():
 	def __init__(self, datas: dict = {}):
 		datas = sorted(datas.items(), reverse=True)
 
+		datas
 		self.degs = list()
 		self.coefs = list()
 
 		# deg:coef if coef not null
-		for deg, coef in datas:
+		for i, (deg, coef) in enumerate(datas.copy()):
 			if coef != 0:
 				if not float(deg).is_integer():
 					raise ValueError("Error: degrees could be integers")
 
 				self.degs.append(int(deg))
 				self.coefs.append(float(coef))
+		
+
+		# Below, i could use datas, but because of int(deg) 
+		# and float(coef) plus coef != 0 it's better that way
+		self.degs_coefs = dict(zip(self.degs, self.coefs))
 
 	def toString(self):
 		return self.__repr__()
@@ -72,35 +77,60 @@ class Poly():
 	def degree(self):
 		return self.degs[0]
 
+	def coefficients(self):
+		""" Absolute coefficients list ex:[0, 2, 0, 0, ...] 
+
+		"""
+
+		degs_coefs = self.degs_coefs
+		deg = self.degree()
+		coefs = []
+
+		for i in range(deg + 1):
+			if i in self.degs: 
+				coefs.append(degs_coefs[i])
+			else: 
+				coefs.append(0)
+
+		return coefs
 	def eval(self, value):
-		""" Return value of P(real) """
+		""" Return value of P(real) 
+			with Ruffini-Horner method
+
+		"""
 
 		if isinstance(value, float) or isinstance(value, int):
-			result = 0
+			# absolute coefficients
+			coefs = self.coefficients()
 
-			for i in range(len(self.coefs)):
-				coef = self.coefs[i]
-				degree = self.degs[i]
+			# calculate result
+			result = coefs[-1]
 
-				result += coef * (value**degree)
+			for i in range(len(coefs) - 2, -1, -1):
+				result = result*value + coefs[i]
 
 			return int(result) if float(result).is_integer() else result
 		else:
 			raise ValueError(f"Unsupported operation of {type(value)} and Poly")
 
-	def derivative(self):
+	def derivative(self, k=1):
 		""" return derivative of this polynomial 
 
 		"""
 
-		# deriavative coefficients list
-		new_c = [self.coefs[i]*self.degs[i] for i in range(len(self.coefs)) ]
+		if k > len(self.degs) + 1:
+			return Poly()
+		if k == 0:
+			return self
+
+		# derivative coefficients list
+		new_c = [coef*deg for deg, coef in self.degs_coefs.items()]
 		# derivative degrees list
 		new_d = [degree - 1 for degree in self.degs]
 		
 		new_poly = Poly(dict(zip(new_d, new_c)))
 
-		return new_poly
+		return new_poly.derivative(k - 1)
 
 	def primitive(self):
 		""" return primitive of this polynomial 
@@ -108,11 +138,12 @@ class Poly():
 		"""
 
 		# primitive coefficients list
-		new_c = [self.coefs[i]/(self.degs[i] + 1) for i in range(0, len(self.coefs) ) ]
+		new_c = [coef/(degs + 1) for deg, coef in self.degs_coefs.items()]
 		# primitive degrees list
 		new_d = [degree + 1 for degree in self.degs]
 
 		new_poly = Poly(dict(zip(new_d, new_c)))
+
 		return new_poly
 
 	def integral(self, a, b): 
@@ -168,7 +199,7 @@ class Poly():
 	def lim(self, x="inf"):
 		pass
 
-	########### SPECIAL METHODS ###########
+	########### SPECIALS METHODS ###########
 	###########					###########
 	def __repr__(self):
 		""" Return polynomial string format
@@ -366,6 +397,15 @@ def main():
 
 	p = Poly({3:2, 2:0, 1:-2, 0:1})
 	print(p)
+	print(p.derivative())
+	print(p.derivative(2))
+	print(p.derivative(3))
+	print(p.derivative(10000))
+	print(p.eval(4))
+
+	P2 = Poly({0:5, 3:2})
+	print(P2.derivative(2))
+	print(P2.derivative(3))
 
 if __name__ == "__main__":
 	main()
