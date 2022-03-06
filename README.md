@@ -82,6 +82,8 @@ x^3 + 2.5
 ## k_th order Derivative 
 ```python
 >>> P2 = Poly({0:5, 3:2})
+>>> print(P2.derivative())
+6x^2
 >>> print(P2.derivative(2))
 12x
 >>> print(P2.derivative(3))
@@ -89,6 +91,6 @@ x^3 + 2.5
 ```
 
 ## Other method
->> eval: value of P(x)
->> integral: polynomial integral from a to b
->> zero: solution of P(x) = 0 for x in [a, b] interval
+> eval: value of P(x)
+> integral: polynomial integral from a to b
+> zero: solution of P(x) = 0 for x in [a, b] interval
