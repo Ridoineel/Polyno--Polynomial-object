@@ -1,7 +1,7 @@
 # POLYNOMIALS
 Polynomial object (class) 
 
-## Installing
+## Installation
 ```bash
 pip install polyno
 ```
@@ -88,9 +88,10 @@ x^3 + 2.5
 12x
 >>> print(P2.derivative(3))
 12
+>>>
 ```
 
 ## Other method
-> eval: value of P(x)
-> integral: polynomial integral from a to b
-> zero: solution of P(x) = 0 for x in [a, b] interval
+> eval: value of P(x) <br/>
+> integral: polynomial integral from a to b <br/>
+> zero: solution of P(x) = 0 for x in [a, b] interval <br/>

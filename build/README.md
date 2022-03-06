@@ -1,1 +1,0 @@
-# Polyno: polynomial object
