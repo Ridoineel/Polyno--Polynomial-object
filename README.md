@@ -12,11 +12,12 @@ from polyno import Poly
 ```
 
 ### Set P1 and P2 for the examples below
-	parameter is dictionary object with key=degree and value=coef
-	**degree:coef**
+	Polynomial parameter is absolute list of coefficients
+	in descending order or dictionnary {degree:coef}
+
 
 ```python
->>> P1 = Poly({1:1, 2:3})
+>>> P1 = Poly([3, 1, 0])
 >>> P2 = Poly({0:5, 3:2})
 ```
 

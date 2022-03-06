@@ -49,22 +49,40 @@ class Poly():
 
 	"""
 
-	def __init__(self, datas: dict = {}):
-		datas = sorted(datas.items(), reverse=True)
+	def __init__(self, datas={}):
+		""" Polynomial parameter is absolute list of coefficients
+			in descending order or dictionnary {degree:coef}
 
-		datas
+		"""
+
 		self.degs = list()
 		self.coefs = list()
 
-		# deg:coef if coef not null
-		for i, (deg, coef) in enumerate(datas.copy()):
-			if coef != 0:
-				if not float(deg).is_integer():
-					raise ValueError("Error: degrees could be integers")
+		# Poly.coefs is list of polynomial degrees according to reversed sorted Poly.degs.
+		# exemple: 
+		#	for P2 = Poly({0:5, 3:2})
+		#	P2.coefs is [2, 5], not [2, 0, 0, 5]
 
-				self.degs.append(int(deg))
-				self.coefs.append(float(coef))
-		
+		if isinstance(datas, dict):
+			datas = sorted(datas.items(), reverse=True)
+
+			# deg:coef if coef not null
+			for i, (deg, coef) in enumerate(datas):
+				if coef != 0:
+					if not float(deg).is_integer():
+						raise ValueError("Error: degrees could be integers")
+
+					self.degs.append(int(deg))
+					self.coefs.append(float(coef))
+		elif isinstance(datas, list):
+			n = len(datas)
+
+			for i, coef in enumerate(datas):
+				if coef != 0:
+					deg = n - i - 1
+
+					self.degs.append(deg)
+					self.coefs.append(float(coef))
 
 		# Below, i could use datas, but because of int(deg) 
 		# and float(coef) plus coef != 0 it's better that way
@@ -387,24 +405,3 @@ class Poly():
 
 	#######################################
 	#######################################
-
-
-	
-
-def main():
-	# TEST
-
-	p = Poly({3:2, 2:0, 1:-2, 0:1})
-	print(p)
-	print(p.derivative())
-	print(p.derivative(2))
-	print(p.derivative(3))
-	print(p.derivative(10000))
-	print(p.eval(4))
-
-	P2 = Poly({0:5, 3:2})
-	print(P2.derivative(2))
-	print(P2.derivative(3))
-
-if __name__ == "__main__":
-	main()
