@@ -155,7 +155,7 @@ class Poly():
 		"""
 
 		# primitive coefficients list
-		new_c = [coef/(degs + 1) for deg, coef in self.degs_coefs.items()]
+		new_c = [coef/(deg + 1) for deg, coef in self.degs_coefs.items()]
 		# primitive degrees list
 		new_d = [degree + 1 for degree in self.degs]
 

@@ -12,19 +12,17 @@ from polyno import Poly
 ```
 
 ### Set P1 and P2 for the examples below
-	Polynomial parameter is absolute list of coefficients
-	in descending order or dictionnary {degree:coef}
+	The parameter of Poly object is 
+	a vector of coefficients in descending 
+	according to the degrees order 
+	or a dictionnary {degree:coef}
+
 
 
 ```python
 >>> P1 = Poly([3, 1, 0])
 >>> P2 = Poly({0:5, 3:2})
 ```
-
-	By default, Poly.coefs is list of polynomial degrees according to reversed sorted Poly.degs.
-	Exemple: P2.coefs is [2, 5], not [2, 0, 0, 5]
-
-	Below, get absolute list in ascending order of coefficients
 
 ```python
 >>> P2.coefficients()
@@ -96,20 +94,51 @@ x^3 + 2.5
 
 ## k_th order Derivative 
 ```python
->>> P2 = Poly({0:5, 3:2})
->>> print(P2.derivative())
+>>> print(P2.derivative()) 	# first order
 6x^2
->>> print(P2.derivative(2))
+>>> print(P2.derivative(2)) # second order
 12x
->>> print(P2.derivative(3))
+>>> print(P2.derivative(3)) # third order
 12
 >>>
 ```
 
-## Other method
+## Other methods
 > eval: value of P(x) <br/>
 > integral: polynomial integral from a to b <br/>
 > zero: solution of P(x) = 0 for x in [a, b] interval <br/>
+
+## Eval
+```python
+>>> P1.eval(2)
+14
+```
+
+## Integral
+
+```python
+>>> # integeral of P2 from 1 to 3
+>>> P2.integral(1, 3)
+50
+```
+
+## Zero
+
+> f(x) = 0 ==> x ?
+
+```python
+>>> # solution of P(x) = 0 ?
+>>> P = Poly({2:-1, 1:-1, 0:1})
+>>> P.zero(0, 10)
+0.6180338561534882
+>>> P.zero(-3, 0)
+-1.6180343627929688
+>>> 
+>>> P.zero(3, 6) # no solution
+>>> P.zero(-3, 3) # two solution, 
+>>> # but nothing is returned 
+>>> # because of dichotomy (binary search) algorithm
+```
 
 # Futures
 >
